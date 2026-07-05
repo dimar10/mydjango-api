@@ -2,6 +2,8 @@ from django.test import TestCase,Client
 import json
 from .models import Contact
 class ContactTests(TestCase):
+    # todo увеличить число проверок,
+    #  непонятно что может придти в гет, непонятно что update сработал и тд
     def setUp(self):
         self.c = Client()
         self.contact = Contact.objects.create(name='Test', phone='+7', email='t@mail.ru')

@@ -1,11 +1,8 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('contacts/',views.get_all),
-    path('contacts/<int:one>/',views.get_one),
-    path('contacts/create/',views.create),
-    path('contacts/<int:one>/upd/',views.upd),
-    path('contacts/<int:one>/del/',views.delete),
-    path('orders/',views.orders),
+
+    path('contacts/', include('getapp.contacts.urls')),
+    path('orders/', include('getapp.orders.urls')),
 ]
