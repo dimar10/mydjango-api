@@ -4,10 +4,25 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import Contact
+from django.db.models import Q
 
 def get_all(rq):
     data = list(Contact.objects.all().values())
-    return JsonResponse(data, safe=False,json_dumps_params={'ensure_ascii': False,'indent':2})
+    if search := rq.GET.get('search'):
+        data  = data.filter(
+            Q(name_icontains = search) or Q(phone_icontains = search) or Q(email_icontains = search)
+        )
+
+        limit = int(rq.GET.get('limit',10))
+        page = int(rq.GET.get('page',1))
+        s = ((page -1) * limit)
+        total = data.count()
+
+        date = list(data[s:s + limit])
+
+
+    return JsonResponse({'total': total,'page':page,'limit':limit,'pages': (total + limit-1)//limit,'res':date
+    }, safe=False,json_dumps_params={'ensure_ascii': False,'indent':2})
 
 def get_one(rq,one):
     c = Contact.objects.get(id = one)
@@ -43,10 +58,19 @@ def orders(rq):
     if status := rq.GET.get('status'):
         qs = qs.filter(status=status)
 
+    limit = int(rq.GET.get('limit', 10))
+    page = int(rq.GET.get('page', 1))
+    s = ((page - 1) * limit)
+    total = qs.count()
+
+
+
     order = rq.GET.get('order','id')
     qs =  qs.order_by(order)
+    date = list(qs[s:s + limit])
 
-    return JsonResponse(list(qs),safe=False,json_dumps_params={'ensure_ascii': False, 'indent': 2})
+    return JsonResponse({'total': total,'page':page,'limit':limit,'pages': (total + limit-1)//limit,'res':date}
+        ,safe=False,json_dumps_params={'ensure_ascii': False, 'indent': 2})
 
 
 
