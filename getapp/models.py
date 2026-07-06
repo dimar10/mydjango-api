@@ -24,3 +24,15 @@ class Order(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class category(models.Model):
+    name = models.CharField(max_length=100)
+    parent = models.ForeignKey('self',on_delete=models.CASCADE, null = True,blank = True,db_column='parent_id')
+    #ну получилась моделька с иерархией ссылающаяся на саму себя
+    class Meta:
+        db_table = 'categories'
+
+    def __str__(self):
+        return self.name
+
