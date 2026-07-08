@@ -5,7 +5,7 @@ from django.db.models import Q
 from getapp.views import orders
 
 
-def json_resp(data,status =200):
+def json_resp(data,status = 200):
     return JsonResponse(
         data,
         safe = False,

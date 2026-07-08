@@ -1,6 +1,6 @@
 from django.test import TestCase,Client
 import json
-from .models import Contact
+from getapp.models import Contact
 class ContactTests(TestCase):
     def setUp(self):
         self.c = Client()
