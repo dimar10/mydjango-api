@@ -33,3 +33,27 @@ class OrderService:
     def delete(self, id: int):
         Order.objects.get(id=id).delete()
         return {'ok': True}
+
+    from django.db import transaction
+
+    @transaction.atomic()
+    def pay(self,order_id,cash):
+        """если бабосиков нет - откатик(exception)"""
+        order = Order.objects.select_for_update().get(pk = order_id)#блокнет строку
+
+        if cash>order.price:
+            raise ValueError('иди работай')
+
+        order.paid = cash
+        order.status = 'paid'
+        order.save()
+
+
+        return {
+            'order_id':order.pk,
+            'price':order.price,
+            'paid':order.paid,
+            'change':order.change,
+
+
+        }

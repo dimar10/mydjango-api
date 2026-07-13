@@ -36,3 +36,15 @@ def order_upd(rq, pk):
 @api
 def order_del(rq, pk):
     return json_response(service.delete(pk))
+
+
+@api
+def order_pay(rq,pk):
+    body = parse_json(rq)
+    #post запрос на бабки
+    cash = body.get('cash',0)
+    #дергаем из словаря сумму от клиента
+    return json_response(service.pay(pk,cash))
+"""если денег нет то поидее 400?"""
+
+

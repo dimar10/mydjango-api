@@ -15,6 +15,7 @@ class Contact(models.Model):
 class Order(models.Model):
     product_name = models.CharField(max_length=200)
     price =  models.DecimalField(max_digits=10,decimal_places=2)
+    paid = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     status = models.CharField(max_length=50,default='new')
     created = models.DateTimeField(auto_now_add=True)
     contact = models.ForeignKey(Contact,on_delete=models.CASCADE,db_column='contact_id')
@@ -24,6 +25,18 @@ class Order(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def change(self):
+        """Сдача за переплату"""
+        if self.paid > self.price:
+            return self.paid - self.price
+        return 0
+
+    @property
+    def is_paid(self):
+        """Хватило денег или нет."""
+        return self.paid >= self.price
 
 
 class category(models.Model):
