@@ -59,7 +59,7 @@ def json_response(data=None, status=200, errors=None):
     '''так чисто для единообразного вывода как для errors так и для data'''
     payload = {"data": data} if errors is None else {"errors": errors}
     return JsonResponse(payload, status=status, safe=False)
-#ocoбого смысла в нем нем встроенный тоже норм
+#ocoбого смысла в нет нем встроенный тоже норм
 
 def filter_params(qs,params,mapping:dict):
     """ мапинг на query params : model field"""
