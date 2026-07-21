@@ -143,3 +143,58 @@ class Solution:
                 current.next = list2
                 list2 = list2.next
             current = current.next
+
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        pairs = {')': '(', '}': '{', ']': '['}
+
+        for i in s:
+            if i in pairs:
+                if not stack or stack[-1] != pairs[i]:
+                    return False
+                stack.pop()
+            else:
+                stack.append(i)
+
+        return len(stack) == 0
+
+
+
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        return len(s.split()[-1])
+
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        num = int("".join(str(d) for d in digits))
+        num += 1
+        return [int(c) for c in str(num)]
+
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        a =int(x**0.5)
+        return a
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        return n
+
+
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        nums1[m:] = nums2
+        nums1.sort()
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        from bisect import bisect_left
+        return bisect_left(nums, target)
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        for i in range(len(nums)):
+            if nums[i] >= target:
+                return i
+        return len(nums)
