@@ -260,6 +260,107 @@ class Solution:
                 l1 = l1.next
             if l2:
                 l2 = l2.next
-
         return dummy.next
+'===================================================================='
+      l1 = self.reverse(l1)
+      l2 = self.reverse(l2)
+
+      pass
+  def reverse(self,head):
+      prev = None
+      curr = head
+
+      while curr:
+          next_temp = curr.next
+          curr.next = prev
+          prev = curr
+          curr = next_temp
+      return prev
+
+
+
+class Node:
+    def __init__(self,value):
+        self.value = value
+        self.next = None
+
+def find_min(head):
+    if not head:
+        raise ValueError('список пустой')
+
+    min_node = head
+    curr =  head.next
+
+    while curr:
+        if curr.value < min_node.value:
+            min_node =curr
+        curr = curr.next
+    return min_node.value
+
+
+def find_max(head):
+    if not head:
+        raise ValueError('список пустой')
+
+    max_node = head
+    curr = head.next
+
+    while curr:
+        if curr.value > max_node.value:
+            max_node = curr
+        curr = curr.next
+
+    return max_node.value
+
+# --- Создание списка: 7 -> 1 -> 3 -> 4 -> 6 -> 3 ---
+head = Node(7)
+head.next = Node(1)
+head.next.next = Node(3)
+head.next.next.next = Node(4)
+head.next.next.next.next = Node(6)
+head.next.next.next.next.next = Node(3)
+
+# --- Проверка ---
+print(find_min(head))   # 1
+print(find_max(head))   # 7
+
+
+
+
+def move(zeros):
+    left = 0
+    for right in range(len(zeros)):
+        if zeros[right] != 0:
+            zeros[left],zeros[right] = zeros[right],zeros[left]
+            left +=1
+
+zeros = [0,0,1,2,4,5]
+move(zeros)
+print(zeros)
+
+
+def moving(zero):
+    count = zero.count(0)
+    res = [x for x in zero if x!=0]#убираем нули
+    res +=[0]*count#добавляем в конец
+    zero[:] = res
+zero =[2,0,0,0,2,3,4,5,5]
+moving(zero)
+print(zero)
+
+list1 = [1,2,3,4,5,6]
+def reverse(list1):
+    prev = None
+    curr = list1
+    while curr:
+        next_node = curr.next #след узел
+        curr.next = prev#меняем сслку на пред
+        prev = curr#prev вперед сдвиг
+        curr = next_node# curr вперед
+    return  prev#новый ведущий списка
+
+
+
+
+
 
