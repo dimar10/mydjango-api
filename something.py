@@ -198,3 +198,68 @@ class Solution:
             if nums[i] >= target:
                 return i
         return len(nums)
+
+'===================================='
+'''update'''
+
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        for i in range(len(digits)-1,-1,-1):
+            #обратный порядок индексов
+            if digits[i] < 9:
+                digits[i] +=1
+                return digits
+            digits[i]=0
+
+        return [1] + digits
+
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+
+        left, right = 0, len(nums)  # right = len не len-1
+
+        while left < right:
+            mid = (left + right) // 2
+
+            if nums[mid] < target:
+                # target точно правее mid двигаем left
+                left = mid + 1
+            else:
+                # nums[mid] >= target,target может быть здесь или левее
+                # сужаем right,но mid остаётся в зоне поиска
+                right = mid
+
+        return left  # left == right
+
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0)  # фиктивный узел-заглушка
+        current = dummy  # указатель, куда будем вешать новые узлы
+        carry = 0  # перенос из предыдущего разряда
+
+        while l1 or l2 or carry:
+            # Берём значения, если список закончился — берём 0
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
+
+            # Суммируем
+            total = val1 + val2 + carry
+
+            # Новая цифра — остаток от деления на 10
+            carry = total // 10
+            digit = total % 10
+
+            # Создаём новый узел и двигаем current
+            current.next = ListNode(digit)
+            current = current.next
+
+            # Двигаем указатели по спискам, если они ещё есть
+            if l1:
+                l1 = l1.next
+            if l2:
+                l2 = l2.next
+
+        return dummy.next
+
